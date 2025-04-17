@@ -3,39 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Тур в Топе – помощник туриста</title>
+  <title>Тур в Топе – Помощник туриста</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
-    header { background: #ff8c00; color: white; text-align: center; padding: 20px 10px; font-size: 24px; font-weight: bold; }
-    .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
-    .button { display: block; background: #ff8c00; color: white; padding: 15px; margin: 10px 0; text-align: center; border-radius: 10px; text-decoration: none; font-size: 18px; }
-    .section { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
-    h2 { margin-top: 0; }
+    :root { --primary: #ff8c00; --accent: #ffb347; --bg: #f9f9f9; --text: #333; --light: #fff; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Montserrat', sans-serif; color: var(--text); background: var(--bg); }
+    header { position: fixed; top: 0; width: 100%; background: var(--light); box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 100; }
+    .nav { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem; }
+    .logo { font-size: 1.75rem; font-weight: 700; color: var(--primary); letter-spacing: 1px; }
+    .nav-links a { margin-left: 1.5rem; text-decoration: none; color: var(--text); font-weight: 600; transition: color .3s; }
+    .nav-links a:hover { color: var(--primary); }
+    main { padding-top: 100px; }
+    .hero { height: 70vh; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; color: var(--light); text-align: center; padding: 0 2rem; position: relative; overflow: hidden; }
+    .hero::after { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1500336624523-d727130c3328?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat; opacity: 0.3; }
+    .hero h1 { font-size: 3rem; z-index: 1; animation: fadeIn 1s ease-out; }
+    .search-bar { max-width: 500px; width: 100%; margin-top: 1.5rem; display: flex; }
+    .search-bar input { flex:1; padding: 0.75rem 1rem; border-radius: 8px 0 0 8px; border: none; font-size: 1rem; }
+    .search-bar button { background: var(--accent); border: none; padding: 0.75rem 1.5rem; border-radius: 0 8px 8px 0; color: var(--light); font-weight: 600; cursor: pointer; transition: background .3s; }
+    .search-bar button:hover { background: #ff9f1c; }
+    .sections { max-width: 1100px; margin: 3rem auto; padding: 0 1rem; display: grid; grid-template-columns: 1fr; gap: 2rem; }
+    @media(min-width:768px) { .sections { grid-template-columns: 1fr 1fr; } }
+    .card { background: var(--light); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 25px rgba(0,0,0,0.05); transition: transform .3s; position: relative; }
+    .card:hover { transform: translateY(-8px); }
+    .card h2 { color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem; }
+    .card p { line-height: 1.6; margin-bottom: 1rem; }
+    .btn { background: var(--primary); color: var(--light); border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: background .3s, transform .3s; }
+    .btn:hover { background: #e67e00; transform: translateY(-2px); }
+    .accordion { border-top: 1px solid #ddd; }
+    .accordion-item { margin-bottom: 1rem; }
+    .accordion-item button { width: 100%; text-align: left; background: var(--light); border: none; padding: 1rem; font-size: 1rem; font-weight:600; display: flex; justify-content: space-between; cursor: pointer; }
+    .accordion-item .content { display: none; padding: 0 1rem 1rem; color: #555; }
+    .footer { text-align: center; padding: 2rem 0; color: #777; font-size: 0.9rem; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
-  <header>ТУР В ТОПЕ — помощник туриста</header>
-
-  <div class="container">
-    <a href="#visa" class="button">🧾 ВИЗА</a>
-    <a href="#flight" class="button">✈️ В САМОЛЕТЕ</a>
-
-    <div id="visa" class="section">
-      <h2>🧾 ВИЗА</h2>
-      <p><strong>Виза в Испанию:</strong> загранпаспорт, анкета, фото 35x45 мм, страховка, бронь отеля и билетов, подтверждение доходов.</p>
-      <p><strong>Виза в Китай:</strong> загранпаспорт, фото, анкета, приглашение или бронь отеля, маршрут поездки.</p>
-      <p><strong>Виза в США:</strong> анкета DS-160, фото 600x600, оплата $185, собеседование (в другой стране).</p>
+  <header>
+    <div class="nav">
+      <div class="logo">ТУР В ТОПЕ</div>
+      <nav class="nav-links">
+        <a href="#visa">Виза</a>
+        <a href="#flight">В самолёте</a>
+        <a href="#luggage">Ручная кладь</a>
+        <a href="#insurance">Страховка</a>
+        <a href="#faq">FAQ</a>
+      </nav>
     </div>
+  </header>
 
-    <div id="flight" class="section">
-      <h2>✈️ В САМОЛЕТЕ</h2>
-      <p><strong>Тряска?</strong> Это обычная турбулентность — самолет не падает, а проходит сквозь воздушные потоки. Расслабьтесь, включи медитацию:</p>
-      <p><a href="https://www.youtube.com/watch?v=inpok4MKVLM" target="_blank">🔊 Медитация от тревоги (YouTube)</a></p>
+  <main>
+    <section class="hero">
+      <h1>Путешествуй с уверенностью</h1>
+      <div class="search-bar">
+        <input type="text" placeholder="Поиск шпаргалки...">
+        <button>Найти</button>
+      </div>
+    </section>
 
-      <p><strong>Взлёт:</strong> сильный шум и вибрации — это работа двигателей на полную мощность, абсолютно нормально.</p>
+    <div class="sections">
+      <section id="visa" class="card">
+        <h2>🧾 Визы</h2>
+        <p><strong>Испания:</strong> паспорт, анкета, фото, страховка, бронирование.</p>
+        <p><strong>Китай:</strong> паспорт, анкета, приглашение, маршрут.</p>
+        <button class="btn">Подробнее</button>
+      </section>
 
-      <p><strong>Посадка:</strong> иногда шасси издаёт хлопок — не пугайся, это часть механизма торможения.</p>
+      <section id="flight" class="card">
+        <h2>✈️ В самолёте</h2>
+        <p>Турбулентность — нормальное явление. Нажми ниже для медитации.</p>
+        <button class="btn" onclick="toggleMed()">Запустить медитацию</button>
+      </section>
+
+      <section id="luggage" class="card">
+        <h2>🧳 Ручная кладь</h2>
+        <p>Аэрофлот: 55×40×25 см, до 10 кг.</p>
+        <p>Ryanair: 40×20×25 см бесплатно.</p>
+        <button class="btn">Все нормы</button>
+      </section>
+
+      <section id="insurance" class="card">
+        <h2>🛡️ Страховка</h2>
+        <p>Минимум €30 000 покрытия.</p>
+        <p>Покрывает экстренную медпомощь, эвакуацию.</p>
+        <button class="btn">Узнать цены</button>
+      </section>
+
+      <section id="faq" class="card accordion">
+        <h2>❓ FAQ</h2>
+        <div class="accordion-item">
+          <button onclick="toggleAccordion(this)">Как оформить визу?<span>+</span></button>
+          <div class="content"><p>Соберите документы: паспорт, анкета, фото, страховка, бронь.</p></div>
+        </div>
+        <div class="accordion-item">
+          <button onclick="toggleAccordion(this)">Что делать при турбулентности?<span>+</span></button>
+          <div class="content"><p>Расслабьтесь, глубокое дыхание, медитация, попросите экипаж.</p></div>
+        </div>
+      </section>
     </div>
-  </div>
+  </main>
+
+  <footer class="footer">© 2025 Тур в Топе</footer>
+
+  <script>
+    function toggleMed() {
+      alert('Медитация запущена. Расслабьтесь и дышите глубоко.');
+    }
+    function toggleAccordion(btn) {
+      const content = btn.nextElementSibling;
+      const isOpen = content.style.display === 'block';
+      content.style.display = isOpen ? 'none' : 'block';
+      btn.querySelector('span').textContent = isOpen ? '+' : '–';
+    }
+  </script>
 </body>
 </html>
+
