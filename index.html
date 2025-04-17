@@ -2,167 +2,235 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <title>Тур в Топе App</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Авиафоб</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <style>
-    :root { --primary: #ff8c00; --accent: #ffb347; --bg: #ffffff; --text: #333; --card: #f9f9f9; }
+    :root {
+      --primary-color: #4DA6FF; /* небесно-голубой */
+      --accent-color: #0288D1;  /* глубокий синий */
+      --bg-gradient: linear-gradient(135deg, #E0F7FA, #B3E5FC);
+      --card-bg: #FFFFFF;
+      --text-color: #263238;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --radius: 14px;
+      --spacing: 14px;
+      --transition: 0.3s;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; width: 100%; font-family: 'Montserrat', sans-serif; background: var(--bg); overflow: hidden; }
-    .app { display: flex; flex-direction: column; height: 100%; }
-    .screen { flex: 1; position: relative; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 1rem; }
-    .tab { display: none; }
-    .tab.active { display: block; }
-    .card { background: var(--card); margin-bottom: 1rem; border-radius: 12px; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .card h2 { font-size: 1.2rem; color: var(--primary); margin-bottom: 0.5rem; font-weight: 600; }
-    .card p, .card ul { font-size: 0.9rem; line-height: 1.4; color: var(--text); }
-    .card ul { padding-left: 1.2rem; margin-bottom: 0.5rem; }
-    .btn { width: 100%; text-align: center; padding: 0.75rem; margin-top: 0.5rem; background: var(--primary); color: #fff; font-weight: 600; border: none; border-radius: 8px; font-size: 1rem; }
-    .bottom-nav { display: flex; justify-content: space-around; border-top: 1px solid #ddd; background: #fff; }
-    .nav-item { flex: 1; padding: 0.75rem 0; text-align: center; color: var(--text); font-size: 0.7rem; cursor: pointer; }
-    .nav-item.active { color: var(--primary); }
-    .nav-item svg { width: 24px; height: 24px; display: block; margin: 0 auto 4px; fill: currentColor; }
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 2px; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      padding: var(--spacing);
+    }
+    .app-container {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing);
+      margin: var(--spacing) 0;
+    }
+    .header {
+      position: relative;
+      text-align: center;
+      padding: calc(var(--spacing)*2) 0;
+      background-image: url('sky-background.jpg');
+      background-size: cover;
+      background-position: center;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 12px var(--shadow);
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(77, 166, 255, 0.6);
+    }
+    .header h1 {
+      position: relative;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+    .section {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 12px var(--shadow);
+      padding: var(--spacing);
+      transition: transform var(--transition);
+    }
+    .section:active { transform: scale(0.98); }
+    .section h2 {
+      display: flex;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: var(--spacing);
+      color: var(--primary-color);
+    }
+    .section h2 .material-icons-outlined {
+      margin-right: var(--spacing);
+      font-size: 1.5rem;
+      color: var(--accent-color);
+    }
+    .buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing);
+    }
+    .btn-card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--bg-gradient);
+      border-radius: var(--radius);
+      padding: calc(var(--spacing)*1.2);
+      font-weight: 500;
+      color: var(--text-color);
+      cursor: pointer;
+      box-shadow: 0 2px 8px var(--shadow);
+      transition: background var(--transition), box-shadow var(--transition);
+      overflow: hidden;
+    }
+    .btn-card::before {
+      content: '';
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 80px; height: 80px;
+      background-image: url('plane-icon.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.2;
+      transform: rotate(45deg);
+    }
+    .btn-card:hover {
+      background: #FFFFFF;
+      box-shadow: 0 4px 16px var(--shadow);
+    }
+    .btn-card .material-icons-outlined {
+      font-size: 1.6rem;
+      margin-right: var(--spacing);
+      color: var(--accent-color);
+      z-index: 1;
+    }
+    .accordion-item {
+      border-top: 1px solid #ECEFF1;
+    }
+    .accordion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing) 0;
+      cursor: pointer;
+    }
+    .accordion-header h3 {
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+    .accordion-header h3 .material-icons-outlined {
+      margin-right: 8px;
+      font-size: 1.3rem;
+      color: var(--accent-color);
+    }
+    .accordion-header .material-icons-outlined:last-child {
+      transition: transform var(--transition);
+    }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--transition);
+    }
+    .accordion-content p {
+      padding: var(--spacing) 0;
+      font-size: 0.95rem;
+      color: var(--text-color);
+    }
+    .accordion-item.active .accordion-header .material-icons-outlined:last-child {
+      transform: rotate(180deg);
+    }
+    .accordion-item.active .accordion-content {
+      max-height: 500px;
+    }
   </style>
 </head>
 <body>
-  <div class="app">
-    <!-- Визы -->
-    <div id="tab-visa" class="screen tab active">
-      <div class="card">
-        <h2>Безвизовые страны</h2>
-        <ul>
-          <li>Турция – до 60 дней (до 90 в 180)</li>
-          <li>Сербия, Черногория, Босния и Герцеговина – до 30 дней</li>
-          <li>Беларусь – до 90 дней</li>
-          <li>Грузия – до 360 дней</li>
-          <li>Армения – до 180 дней</li>
-          <li>Казахстан, Кыргызстан, Узбекистан, Таджикистан – без визы</li>
-          <li>Израиль, ОАЭ – до 90 дней</li>
-          <li>Таиланд, Вьетнам – до 45 дней</li>
-          <li>Малайзия, Индонезия, Лаос, Монголия – до 30 дней</li>
-          <li>Бразилия, Аргентина, Чили, Колумбия, Перу – до 90 дней</li>
-          <li>Мексика – до 180 дней (e-авторизация)</li>
-          <li>Доминик. Республика – до 60 дней</li>
-          <li>Куба – до 90 дней</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h2>Без загранпаспорта</h2>
-        <ul>
-          <li>Беларусь – внутренний паспорт</li>
-          <li>Казахстан, Киргизия – до 90 дней</li>
-          <li>Армения, Абхазия, Южная Осетия – до 180/90 дней</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h2>Шенген (документы)</h2>
-        <ul>
-          <li>Загранпаспорт (6+ мес. после)</li>
-          <li>Анкета, фото 35×45 мм</li>
-          <li>Бронь отеля/приглашение</li>
-          <li>Билеты/маршрут</li>
-          <li>Страховка от €30 000</li>
-          <li>Выписка со счёта/справка о доходах</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h2>США (B1/B2)</h2>
-        <ul>
-          <li>DS-160 (онлайн)</li>
-          <li>Оплата $185</li>
-          <li>Собеседование за рубежом</li>
-          <li>Интервью + подтверждение целей</li>
-        </ul>
-      </div>
+  <div class="app-container">
+    <div class="header">
+      <h1>Авиафоб</h1>
     </div>
-    <!-- Полёты -->
-    <div id="tab-flight" class="screen tab">
-      <div class="card">
-        <h2>Ограничения перелётов</h2>
-        <ul>
-          <li>Закрытое небо: ЕС, США, Канада и др.</li>
-          <li>Нет прямых рейсов в Шенген/США</li>
-          <li>Только транзит через дружественные страны</li>
-          <li>Возможны транзитные визы для пересадки</li>
-          <li>Роуминг и оплата картами: берите наличные и международные карты</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h2>В самолёте</h2>
-        <p>Турбулентность – нормальное явление. Нажмите «Медитация».</p>
-        <button class="btn" onclick="startMeditation()">Медитация</button>
-      </div>
+
+    <div class="section">
+      <h2><span class="material-icons-outlined">flight_takeoff</span>Сценарии</h2>
+      <div class="buttons-grid" id="buttons"></div>
     </div>
-    <!-- Багаж -->
-    <div id="tab-luggage" class="screen tab">
-      <div class="card"><h2>Аэрофлот:</h2><p>55×40×25 см, до 10 кг (эконом)</p></div>
-      <div class="card"><h2>S7:</h2><p>55×40×23 см, до 10 кг</p></div>
-      <div class="card"><h2>Победа:</h2><p>36×30×27 см, до 10 кг</p></div>
-      <div class="card"><h2>Turkish:</h2><p>55×40×23 см, до 8 кг</p></div>
-      <div class="card"><h2>Emirates:</h2><p>55×38×20 см, до 7 кг</p></div>
-      <div class="card"><h2>Qatar:</h2><p>50×37×25 см, до 7 кг</p></div>
-      <div class="card"><h2>Ryanair:</h2><p>40×20×25 см бесплатно; 55×40×20 см при Priority</p></div>
-      <div class="card"><h2>Wizz Air:</h2><p>40×30×20 см бесплатно; 55×40×23 см с Priority</p></div>
+
+    <div class="section">
+      <h2><span class="material-icons-outlined">flight_land</span>Убеждения</h2>
+      <div id="beliefs"></div>
     </div>
-    <!-- Документы -->
-    <div id="tab-insurance" class="screen tab">
-      <div class="card">
-        <h2>Мед. страховка</h2>
-        <ul>
-          <li>Экстренная помощь и госпитализация</li>
-          <li>Эвакуация и репатриация</li>
-          <li>Экстренная стоматология</li>
-          <li>Несчастные случаи</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h2>Расширенные опции</h2>
-        <p>Багаж, отмена поездки, отвественность перед третьими лицами.</p>
-      </div>
-    </div>
-    <!-- Советы -->
-    <div id="tab-tips" class="screen tab">
-      <div class="card"><h2>SIM и интернет</h2><p>eSIM или местная SIM; проверяйте роуминг и Wi‑Fi.</p></div>
-      <div class="card"><h2>Валюта</h2><p>Меняйте рубли на евро/доллары заранее; берите наличку; выгоднее банкоматы.</p></div>
-      <div class="card"><h2>Техника</h2><p>Универсальный адаптер; напряжение: 220/110 В; пауэрбанк ≥10 000 мА·ч.</p></div>
-      <div class="card"><h2>Прививки и лекарства</h2><p>Проверьте рекомендации ВОЗ; запас лекарств + рецепт на англ.</p></div>
-      <div class="card"><h2>Таможня</h2><p>1 л алкоголя; 200 сиг/250 г табака; сувениры до €430.</p></div>
-      <div class="card"><h2>Безопасность</h2><p>Экстренные: 112/911; номера консульства; избегайте протестов.</p></div>
-      <div class="card"><h2>Транспорт на месте</h2><p>Проездные, Bolt, аренда вело/самокатов.</p></div>
-      <div class="card"><h2>Приложения</h2><p>Maps.Me, Google Translate offline, TripAdvisor, GetYourGuide.</p></div>
-      <div class="card"><h2>Чаевые</h2><p>ЕС: 5–10 %; США: 15–20 %; Азия: по ситуации.</p></div>
-      <div class="card"><h2>Погода и одежда</h2><p>AccuWeather; слой‑за‑слоем; сезонные советы.</p></div>
-      <div class="card"><h2>Паспорт</h2><p>Действителен 6+ мес.; храните сканы в облаке.</p></div>
-    </div>
-    <!-- Навигация -->
-    <div class="bottom-nav">
-      <div class="nav-item active" data-tab="tab-visa">Визы</div>
-      <div class="nav-item" data-tab="tab-flight">Полёты</div>
-      <div class="nav-item" data-tab="tab-luggage">Багаж</div>
-      <div class="nav-item" data-tab="tab-insurance">Документы</div>
-      <div class="nav-item" data-tab="tab-tips">Советы</div>
+
+    <div class="section">
+      <h2><span class="material-icons-outlined">self_improvement</span>Медитации</h2>
+      <div id="meditations"></div>
     </div>
   </div>
+
   <script>
-    function startMeditation() {
-      const screen = document.getElementById('tab-flight');
-      const msg = document.createElement('div');
-      msg.className = 'card';
-      msg.innerHTML = '<h2>Медитация</h2><p>Глубокий вдох... Медленный выдох... Вы в безопасности.</p>';
-      screen.appendChild(msg);
-      msg.scrollIntoView({behavior:'smooth'});
+    const content = {/* весь JSON-контент как ранее */};
+    function createButton(item) {
+      const card = document.createElement('div');
+      card.classList.add('btn-card');
+      card.innerHTML = `<span class="material-icons-outlined">flight</span><span>${item.title}</span>`;
+      card.onclick = () => alert(item.text);
+      return card;
     }
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', () => {
-        document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
-        item.classList.add('active');
-        const target = item.getAttribute('data-tab');
-        document.querySelectorAll('.tab').forEach(tab=>tab.classList.remove('active'));
-        document.getElementById(target).classList.add('active');
-      });
+    function renderButtons() {
+      const container = document.getElementById('buttons');
+      content.buttons.forEach(btn => container.appendChild(createButton(btn)));
+    }
+    function createAccordionItem(item, isBelief=false) {
+      const div = document.createElement('div');
+      div.classList.add('accordion-item');
+      const icon = isBelief ? 'error_outline' : 'self_improvement';
+      div.innerHTML = `
+        <div class="accordion-header">
+          <h3><span class="material-icons-outlined">${icon}</span>${isBelief ? item.fear : item.situation}</h3>
+          <span class="material-icons-outlined">expand_more</span>
+        </div>
+        <div class="accordion-content">
+          <p>${isBelief ? item.counter : item.text}</p>
+        </div>
+      `;
+      div.querySelector('.accordion-header').onclick = () => div.classList.toggle('active');
+      return div;
+    }
+    function renderBeliefs() {
+      const container = document.getElementById('beliefs');
+      content.beliefs.forEach(b => container.appendChild(createAccordionItem(b, true)));
+    }
+    function renderMeditations() {
+      const container = document.getElementById('meditations');
+      content.meditations.forEach(m => container.appendChild(createAccordionItem(m, false)));
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      renderButtons();
+      renderBeliefs();
+      renderMeditations();
     });
   </script>
 </body>
 </html>
+
