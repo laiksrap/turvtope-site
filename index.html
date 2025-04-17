@@ -10,226 +10,237 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #4DA6FF; /* небесно-голубой */
-      --accent-color: #0288D1;  /* глубокий синий */
+      --primary-color: #4DA6FF;
+      --accent-color: #0288D1;
       --bg-gradient: linear-gradient(135deg, #E0F7FA, #B3E5FC);
       --card-bg: #FFFFFF;
       --text-color: #263238;
-      --shadow: rgba(0, 0, 0, 0.1);
-      --radius: 14px;
-      --spacing: 14px;
-      --transition: 0.3s;
+      --shadow: rgba(0,0,0,0.1);
+      --radius:14px;
+      --spacing:14px;
+      --transition:0.3s;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html, body { height:100%; }
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family:'Poppins', sans-serif;
       background: var(--bg-gradient);
       color: var(--text-color);
-      line-height: 1.6;
-      display: flex;
-      justify-content: center;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      align-items:center;
       padding: var(--spacing);
     }
     .app-container {
-      width: 100%;
-      max-width: 400px;
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing);
-      margin: var(--spacing) 0;
-    }
-    .header {
-      position: relative;
-      text-align: center;
-      padding: calc(var(--spacing)*2) 0;
-      background-image: url('sky-background.jpg');
-      background-size: cover;
-      background-position: center;
-      border-radius: var(--radius);
-      box-shadow: 0 4px 12px var(--shadow);
-      overflow: hidden;
-    }
-    .header::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(77, 166, 255, 0.6);
-    }
-    .header h1 {
-      position: relative;
-      font-size: 2rem;
-      font-weight: 700;
-      color: #FFFFFF;
-    }
-    .section {
+      width:100%;
+      max-width:400px;
+      flex:1;
+      display:flex;
+      flex-direction:column;
       background: var(--card-bg);
       border-radius: var(--radius);
-      box-shadow: 0 4px 12px var(--shadow);
+      box-shadow:0 4px 12px var(--shadow);
+      overflow:hidden;
+    }
+    .tab-bar {
+      display:flex;
+      background:#fff;
+      box-shadow:0 -2px 8px var(--shadow);
+    }
+    .tab {
+      flex:1;
+      text-align:center;
       padding: var(--spacing);
-      transition: transform var(--transition);
+      cursor:pointer;
+      transition: background var(--transition);
+      position:relative;
     }
-    .section:active { transform: scale(0.98); }
-    .section h2 {
-      display: flex;
-      align-items: center;
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: var(--spacing);
-      color: var(--primary-color);
+    .tab.active {
+      background: var(--bg-gradient);
     }
-    .section h2 .material-icons-outlined {
-      margin-right: var(--spacing);
-      font-size: 1.5rem;
+    .tab .material-icons-outlined {
+      display:block;
+      font-size:24px;
+      margin-bottom:4px;
       color: var(--accent-color);
     }
+    .content {
+      flex:1;
+      overflow-y:auto;
+      padding: var(--spacing);
+    }
     .buttons-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
       gap: var(--spacing);
     }
     .btn-card {
-      position: relative;
-      display: flex;
-      align-items: center;
+      position:relative;
+      display:flex;
+      align-items:center;
       background: var(--bg-gradient);
       border-radius: var(--radius);
       padding: calc(var(--spacing)*1.2);
-      font-weight: 500;
+      font-weight:500;
       color: var(--text-color);
-      cursor: pointer;
-      box-shadow: 0 2px 8px var(--shadow);
+      cursor:pointer;
+      box-shadow:0 2px 8px var(--shadow);
       transition: background var(--transition), box-shadow var(--transition);
-      overflow: hidden;
+      overflow:hidden;
     }
-    .btn-card::before {
-      content: '';
-      position: absolute;
-      top: -20px; right: -20px;
-      width: 80px; height: 80px;
-      background-image: url('plane-icon.svg');
-      background-size: contain;
-      background-repeat: no-repeat;
-      opacity: 0.2;
-      transform: rotate(45deg);
-    }
-    .btn-card:hover {
-      background: #FFFFFF;
-      box-shadow: 0 4px 16px var(--shadow);
-    }
+    .btn-card:hover { background:#fff; box-shadow:0 4px 16px var(--shadow); }
     .btn-card .material-icons-outlined {
-      font-size: 1.6rem;
-      margin-right: var(--spacing);
+      font-size:20px;
+      margin-right:8px;
       color: var(--accent-color);
-      z-index: 1;
     }
-    .accordion-item {
-      border-top: 1px solid #ECEFF1;
-    }
+    .accordion-item { border-top:1px solid #ECEFF1; }
     .accordion-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
       padding: var(--spacing) 0;
-      cursor: pointer;
+      cursor:pointer;
     }
     .accordion-header h3 {
-      display: flex;
-      align-items: center;
-      font-size: 1rem;
-      font-weight: 500;
+      display:flex;
+      align-items:center;
+      font-size:16px;
       color: var(--text-color);
     }
-    .accordion-header h3 .material-icons-outlined {
-      margin-right: 8px;
-      font-size: 1.3rem;
+    .accordion-header h3 .material-icons-outlined:first-child {
+      margin-right:8px;
       color: var(--accent-color);
+      font-size:18px;
     }
     .accordion-header .material-icons-outlined:last-child {
-      transition: transform var(--transition);
+      transition:transform var(--transition);
     }
-    .accordion-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height var(--transition);
-    }
-    .accordion-content p {
-      padding: var(--spacing) 0;
-      font-size: 0.95rem;
-      color: var(--text-color);
-    }
-    .accordion-item.active .accordion-header .material-icons-outlined:last-child {
-      transform: rotate(180deg);
-    }
-    .accordion-item.active .accordion-content {
-      max-height: 500px;
-    }
+    .accordion-content { max-height:0; overflow:hidden; transition:max-height var(--transition); }
+    .accordion-content p { padding: var(--spacing) 0; font-size:14px; }
+    .accordion-item.active .accordion-header .material-icons-outlined:last-child { transform:rotate(180deg); }
+    .accordion-item.active .accordion-content { max-height:400px; }
   </style>
 </head>
 <body>
   <div class="app-container">
-    <div class="header">
-      <h1>Авиафоб</h1>
-    </div>
-
-    <div class="section">
-      <h2><span class="material-icons-outlined">flight_takeoff</span>Сценарии</h2>
-      <div class="buttons-grid" id="buttons"></div>
-    </div>
-
-    <div class="section">
-      <h2><span class="material-icons-outlined">flight_land</span>Убеждения</h2>
-      <div id="beliefs"></div>
-    </div>
-
-    <div class="section">
-      <h2><span class="material-icons-outlined">self_improvement</span>Медитации</h2>
-      <div id="meditations"></div>
+    <div id="content" class="content"></div>
+    <div class="tab-bar">
+      <div class="tab active" data-tab="buttons">
+        <span class="material-icons-outlined">flight_takeoff</span>
+        Сценарии
+      </div>
+      <div class="tab" data-tab="beliefs">
+        <span class="material-icons-outlined">flight_land</span>
+        Убеждения
+      </div>
+      <div class="tab" data-tab="meditations">
+        <span class="material-icons-outlined">self_improvement</span>
+        Медитации
+      </div>
     </div>
   </div>
 
   <script>
-    const content = {/* весь JSON-контент как ранее */};
-    function createButton(item) {
-      const card = document.createElement('div');
-      card.classList.add('btn-card');
-      card.innerHTML = `<span class="material-icons-outlined">flight</span><span>${item.title}</span>`;
-      card.onclick = () => alert(item.text);
-      return card;
-    }
-    function renderButtons() {
-      const container = document.getElementById('buttons');
-      content.buttons.forEach(btn => container.appendChild(createButton(btn)));
-    }
-    function createAccordionItem(item, isBelief=false) {
-      const div = document.createElement('div');
-      div.classList.add('accordion-item');
-      const icon = isBelief ? 'error_outline' : 'self_improvement';
-      div.innerHTML = `
-        <div class="accordion-header">
-          <h3><span class="material-icons-outlined">${icon}</span>${isBelief ? item.fear : item.situation}</h3>
-          <span class="material-icons-outlined">expand_more</span>
-        </div>
-        <div class="accordion-content">
-          <p>${isBelief ? item.counter : item.text}</p>
-        </div>
-      `;
-      div.querySelector('.accordion-header').onclick = () => div.classList.toggle('active');
-      return div;
-    }
-    function renderBeliefs() {
-      const container = document.getElementById('beliefs');
-      content.beliefs.forEach(b => container.appendChild(createAccordionItem(b, true)));
-    }
-    function renderMeditations() {
-      const container = document.getElementById('meditations');
-      content.meditations.forEach(m => container.appendChild(createAccordionItem(m, false)));
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      renderButtons();
-      renderBeliefs();
-      renderMeditations();
-    });
+    (() => {
+      const contentData = {
+        buttons: [
+          { title:"Турбулентность", text:"Турбулентность — обычные потоки воздуха; самолёт рассчитан на многократные перегрузки." },
+          { title:"Воздушная яма", text:"Резкий перепад воздуха, но самолёт конструктивно рассчитан для подобных условий." },
+          { title:"Шум двигателя", text:"Гул турбин — нормальный режим работы, безопасный для полёта." },
+          { title:"Хлопки шасси", text:"Гидравлические механизмы при выпуске шасси; проходят тысячи циклов тестирования." },
+          { title:"Давление в салоне", text:"Плавное изменение давления; зевание и жевание помогают выравнять давление в ушах." },
+          { title:"Изменение освещения", text:"Отражения и смена света — естественная адаптация глаз к условиям." },
+          { title:"Крен при повороте", text:"Небольшой угол наклона — стандартная манёвр при смене курса." },
+          { title:"Реакция крыльев", text:"Гибкие консоли крыльев гасят вибрации и безопасны." },
+          { title:"Вибрация кресла", text:"Мелкие колебания от полосы и скорости; безвредное явление." },
+          { title:"Шум вентиляции", text:"Гул кондиционера и фильтры — чистый воздух и комфорт в салоне." },
+          { title:"Сигналы экипажа", text:"Объявления и сигналы — для информирования и безопасности пассажиров." },
+          { title:"Громкие объявления", text:"Голос капитана — знак ответственности и контроля над полётом." },
+          { title:"Ускорение на взлёте", text:"Сосредоточьтесь на дыхании: вдох 4, задержка 2, выдох 6 для расслабления." },
+          { title:"Щелчок иллюминатора", text:"Щелчок уплотнителей — проверенный герметичный механизм иллюминатора." },
+          { title:"Перепад температуры", text:"Системы кондиционирования поддерживают комфортную температуру." }
+        ],
+        beliefs: [
+          { fear:"Самолёт ненадёжный и может развалиться", counter:"Самолёт проходит многократные испытания на перегрузки выше расчётных." },
+          { fear:"Турбулентность опасна для конструкции", counter:"Крылья и фюзеляж рассчитаны на сильные порывы ветра до 200 км/ч." },
+          { fear:"Пилоты делают ошибки", counter:"Опыт командиров свыше 10 000 часов; автопилот снижает риски." },
+          { fear:"Проверки поверхностны", counter:"Перед каждым рейсом механики проверяют все системы по чек-листам." },
+          { fear:"Статистика аварий скрывается", counter:"Независимые агентства публикуют полные отчёты об инцидентах." },
+          { fear:"Отказ кислородной системы", counter:"Резервные баллоны и автоматическое срабатывание масок при падении давления." },
+          { fear:"Резкое давление разрывает уши", counter:"Плавная герметизация кабины и простые упражнения по зеванию и жеванию." },
+          { fear:"Автопилот может выйти из строя", counter:"Пилоты всегда готовы взять управление на себя вручную." },
+          { fear:"Невозможно эвакуироваться на высоте", counter:"Обученный экипаж и трапы рассчитаны на эвакуацию за 90 секунд." },
+          { fear:"Техобслуживание ненадёжно", counter:"Регулярные инспекции и лог полётов контролируют каждую деталь." }
+        ],
+        meditations: [
+          { situation:"Перед взлётом", text:"Сядьте ровно, вдох 4, задержка 2, выдох 6, представьте отделение самолёта от земли." },
+          { situation:"Набор высоты", text:"Слушайте шум моторов как море, вдох уносит вас всё выше." },
+          { situation:"Турбулентность", text:"Представьте лодку на волнах, мягкие покачивания успокаивают вас." },
+          { situation:"Хлопки шасси", text:"Отмечайте щелчки, выдыхая вместе с ними тревогу." },
+          { situation:"Заложенность ушей", text:"Пальцы на мочки ушей, медленный вдох-выдох, выравнивание давления." },
+          { situation:"Шум вентиляции", text:"Сосредоточьтесь на ровном гуле, как на фон дождя; расслабьтесь." },
+          { situation:"Рейсовые объявления", text:"Голос капитана — опора вашего спокойствия; слушайте и дышите глубоко." },
+          { situation:"Длительная задержка", text:"Закройте глаза, представьте любимое место, дышите этим воспоминанием." },
+          { situation:"Ночной полёт", text:"Лунный свет за окном, тяжесть тела и медленное дыхание приводят к покою." },
+          { situation:"Ожидание багажа", text:"Это пауза; глубокий вдох и выдох возвращают вас в момент безопасности." }
+        ]
+      };
+
+      const contentEl = document.getElementById('content');
+      const tabs = document.querySelectorAll('.tab');
+
+      function clearContent() {
+        contentEl.innerHTML = '';
+      }
+
+      function renderButtons() {
+        clearContent();
+        const grid = document.createElement('div'); grid.className = 'buttons-grid';
+        contentData.buttons.forEach(item => {
+          const btn = document.createElement('div'); btn.className = 'btn-card';
+          btn.innerHTML = `<span class="material-icons-outlined">flight</span><span>${item.title}</span>`;
+          btn.onclick = () => alert(item.text);
+          grid.appendChild(btn);
+        });
+        contentEl.appendChild(grid);
+      }
+
+      function renderAccordions(list, icon) {
+        clearContent();
+        list.forEach(item => {
+          const div = document.createElement('div'); div.className = 'accordion-item';
+          const header = document.createElement('div'); header.className = 'accordion-header';
+          const title = document.createElement('h3'); title.innerHTML = `<span class="material-icons-outlined">${icon}</span>${icon === 'error_outline' ? item.fear : item.situation}`;
+          const arrow = document.createElement('span'); arrow.className = 'material-icons-outlined'; arrow.textContent = 'expand_more';
+          header.appendChild(title); header.appendChild(arrow);
+          const contentDiv = document.createElement('div'); contentDiv.className = 'accordion-content';
+          const p = document.createElement('p'); p.textContent = icon === 'error_outline' ? item.counter : item.text;
+          contentDiv.appendChild(p);
+          header.onclick = () => div.classList.toggle('active');
+          div.appendChild(header); div.appendChild(contentDiv);
+          contentEl.appendChild(div);
+        });
+      }
+
+      function activateTab(tabEl) {
+        tabs.forEach(t => t.classList.remove('active'));
+        tabEl.classList.add('active');
+        const key = tabEl.getAttribute('data-tab');
+        if (key === 'buttons') renderButtons();
+        else if (key === 'beliefs') renderAccordions(contentData.beliefs, 'error_outline');
+        else if (key === 'meditations') renderAccordions(contentData.meditations, 'self_improvement');
+      }
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => activateTab(tab));
+      });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        activateTab(document.querySelector('.tab.active'));
+      });
+    })();
   </script>
 </body>
 </html>
